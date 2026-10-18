@@ -1,3 +1,13 @@
+# GitHub Pages / browser Python verification — v0.9
+
+19 October 2026. All 56 native Python regression tests pass. The static build loads the self-hosted Pyodide 0.27.7 runtime in a real Chromium browser, creates both snakes and all role meters, and advances through the same Python transition without a backend server. Native and browser initial hashes match (`c4e0f2ecbf4f`), as do the hashes after one autonomous tick (`9a2d0dffdc04`). These finite comparisons do not establish cross-version equivalence for all possible trajectories.
+
+A labeled new-information input was queued in browser mode and appeared in the decoded outcome at tick 2, including the mapped cell and provenance. Static mode is one independent world per browser tab/device; server mode retains its shared laptop authority. Python runs in a background worker so rendering does not synchronously execute simulation steps.
+
+The publication workflow builds the Pages artifact and tests the native engine on Python 3.12. Third-party runtime files and licenses are committed for reproducible loading. Physical Quest 3S immersive entry, head/controller tracking, frame rate and comfort remain untested; these require hardware acceptance after opening the deployed HTTPS URL in Meta Quest Browser.
+
+---
+
 # Verification — 19 October 2026 — v0.8
 
 ## Checks
