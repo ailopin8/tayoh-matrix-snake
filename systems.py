@@ -131,6 +131,7 @@ class Systems:
                 'pending':copy.deepcopy(self.pending),'processed':copy.deepcopy(self.processed)}
     def output(self,w):
         return {'schema':'tayoh.system-output.v1','tick':w.tick,'interpretation':'Designed simulation outcomes; not calibrated real-world predictions',
+                'purpose':w.purpose_observer.report(w),
                 'protector_integrity':self.integrity,'healer_vitality':self.healer['vitality'],'safe_space':self.healer['safe'],
                 'children':{a.label:{'alive':a.alive,'food_consumed':a.score,'battery':a.battery} for a in w.agents},
                 'protector_food_consumed':self.protector['consumed'],'external_cause':'unknown within a seeded bounded envelope',

@@ -9,7 +9,7 @@ out=root/'dist'
 if out.exists():shutil.rmtree(out)
 shutil.copytree(root/'web',out)
 (out/'py').mkdir(exist_ok=True)
-for name in ('engine.py','systems.py','resources.py'):shutil.copy2(root/name,out/'py'/name)
+for name in ('engine.py','systems.py','resources.py','purpose.py'):shutil.copy2(root/name,out/'py'/name)
 (out/'runtime-config.json').write_text(json.dumps({'mode':'browser-python'}))
 # One content fingerprint binds HTML, modules, config and Python files to a build.
 h=hashlib.sha256()

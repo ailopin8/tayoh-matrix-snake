@@ -1,0 +1,15 @@
+# Purpose, rules and observed behavior — v0.12
+
+The statement “the purpose of a system is what it does” is implemented as an observational lens. Declared purpose is a design statement, rules are explicit mechanisms, and observed behavior is measured evidence. The model does not infer consciousness, intention or a uniquely true purpose.
+
+`purpose.py` records one sample at initialization and after each completed logical tick. The last 32 samples are retained, representing at most 31 transitions. For any cumulative counter c, observed activity is Δc = c(t) − c(t₀). For state variables such as battery and integrity, the same difference describes net change. Unsafe production time is the count of unsafe post-transition samples. Initial food inventory is excluded from production activity by differencing the healer counter.
+
+The report includes tick bounds, raw evidence, operating rules, declarations and descriptive observations for protector, healer and each child. Interface attention flags are designed thresholds: boundary loss ≥10; unsafe production on ≥5 observed ticks; a child inactive or with battery loss ≥15 and no food intake. These are prompts to investigate, not statistical significance tests. First-sample reports have no behavioral conclusions. Full food inventory, reserves, pressure, reciprocal models and decision explanations remain available alongside this view.
+
+Priority is protector, healer, then children in stable agent order. Existing urgent viability warnings take priority over purpose-gap attention. Nonurgent interface changes retain the existing five-tick hold; a manually pinned lens remains pinned. Desktop cards show all declarations, rules and observations. The VR purpose panel shows the first flagged role, or child A when no role is flagged. Thus the interface autonomously selects attention while its controls remain stable and under user control.
+
+The observer uses no randomness and changes no movement, food, repair, energy or collision rules. It describes the existing autonomous processes rather than rewriting them from philosophical labels. Manual control of A is disclosed in its operating rules. Decreased battery, reduced integrity and food production have multiple simultaneous causes; these reports are not isolated causal estimates. Comparisons between experiments require matched seeds, tick intervals and input histories.
+
+Evidence participates in the authoritative state hash and is reproduced by action replay. Reads never record new evidence. Reset starts a new window. Exported outcome JSON includes the same report; the published browser worker loads the exact Python observer used by the local service. Previous-version hashes will differ because the state schema now includes evidence. Quest controller mappings are unchanged.
+
+Verification: deterministic replay, bounded window, reset, no-data state, snapshot immutability, raw-delta and threshold checks, framework-disabled/single-child compatibility, and interface urgency priority. Physical headset readability and tracking remain untested locally.

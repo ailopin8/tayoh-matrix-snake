@@ -8,6 +8,7 @@ export function deriveNeed(s,objective='understand'){
   if(systems&&!systems.healer.safe)return {mode:'stabilize',focus:'healer',lens:'material',urgent:true,reason:'Safe production is paused; inspect food deadlines and the safety condition.'};
   if(minBattery<25)return {mode:'stabilize',focus:'children',lens:'material',urgent:true,reason:'A child has less than 25% battery; inspect reachable food and competing claims.'};
   if((systems?.pressure||0)>=5)return {mode:'investigate',focus:'protector',lens:'boundary',urgent:false,reason:'External pressure is elevated. Its cause is still uncertain.'};
+  if(s.purpose?.roles?.some(r=>r.gap)){const a=s.purpose.attention;return {mode:'investigate',focus:a.focus.startsWith('child_')?'children':a.focus,lens:a.lens,urgent:false,reason:'Declared / observed gap · '+a.reason};}
   if(objective==='experiment'||systems?.pending?.length)return {mode:'experiment',focus:'relationships',lens:'information',urgent:false,reason:'Trace an explicitly mapped input through its queued and applied outcome.'};
   if(objective==='maintain')return {mode:'maintain',focus:'relationships',lens:'relationships',urgent:false,reason:'Compare contributions, reserves and needs before intervening.'};
   return {mode:'observe',focus:'relationships',lens:'relationships',urgent:false,reason:'No immediate viability threshold is breached. Explore the reciprocal relationships.'};

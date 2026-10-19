@@ -52,3 +52,7 @@ Physical WebXR headset entry, stereo, tracking, controller mapping, comfort/perf
 ## v0.11 controller update
 
 Added nine automated controller tests (21 JavaScript tests total) for handedness, edge presses, held/reconnected buttons, deadzone, capped frame time, stick modes, home, grip transforms, scaling bounds, tracking loss, source replacement and XR sampling. Existing 56 Python tests retain simulation coverage. See QUEST_CONTROLS.md for mappings and the physical-headset checklist. Physical Quest controls and immersion remain untested in this development environment; no claim of headset validation is made.
+
+## v0.12 purpose evidence update
+
+61 Python tests and 22 JavaScript tests pass. The published Python worker includes purpose.py. Desktop preview verified no-evidence initial state and post-step measured outcomes. The VR purpose panel uses the same authoritative report and includes declaration, rules and observed behavior. Physical headset readability remains untested.

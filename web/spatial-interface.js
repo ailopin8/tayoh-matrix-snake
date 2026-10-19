@@ -5,6 +5,7 @@ export class SpatialInterface{
   this.actions=actions;this.root=new THREE.Group();this.root.position.copy(parent.position);scene.add(this.root);this.hitTargets=[];this.ray=new THREE.Raycaster();this.rotation=new THREE.Matrix4();this.labels=[];this.signature='';
   this.banner=this.panel(1.65,.25,[0,.88,0]);
   this.roles=[this.panel(.72,.3,[-.93,.36,0]),this.panel(.72,.3,[-.93,-.1,0]),this.panel(.72,.3,[.93,-.1,0])];
+  this.purpose=this.panel(.78,.33,[.96,.44,0]);
   this.roleNames=['Protector','Healer','Children'];
   this.lines=[];
   for(const [a,b] of [[[-.58,.32,0],[-.58,-.05,0]],[[-.55,-.18,0],[.55,-.18,0]],[[.55,.05,0],[-.55,.42,0]]]){
@@ -37,6 +38,7 @@ export class SpatialInterface{
  update(s,p,context,running,draft){
   const signature=JSON.stringify([s.tick,p.mode,p.lens,p.focus,context.purpose,context.inspection,running,draft?.effect,draft?.spatialSupport]);if(signature===this.signature)return;this.signature=signature;
   this.text(this.banner,[`${p.mode.toUpperCase()} / ${p.lens}`,context.purpose,draft?draft.effect:p.alert||context.inspection||p.reason],p.urgent?'#ffad83':'#7cebc2');
+  const evidence=s.purpose,focus=evidence?.roles.find(r=>r.gap)||evidence?.roles.find(r=>r.role==='child_A');if(focus)this.text(this.purpose,[`PURPOSE / ${focus.role} · ${evidence.from_tick}–${evidence.to_tick}`,`Aim: ${focus.declared}`,`Rule: ${focus.rules}`,focus.observed],focus.gap?'#ffd08a':'#7cebc2');
   const x=s.systems;
   const values=[[`Protector ${x?.integrity??'?'} / 100`,`Repair reserve ${x?.protector.reserve??'?'}`,`External pressure ${x?.pressure??'?'} / 10`],[`Healer ${x?.healer.vitality??'?'} / 100`,x?.healer.safe?'Safe production':'Production paused',`Expired food → protector ${x?.protector.consumed??0}`],[`Children A / B`,...s.agents.map(a=>`${a.id}: food ${a.score} · battery ${a.battery}/${a.capacity}`)]];
   values.forEach((v,i)=>this.text(this.roles[i],v,p.focus===this.roleNames[i].toLowerCase()||p.focus==='relationships'?'#7cebc2':'#829fa8',p.focus===this.roleNames[i].toLowerCase()));

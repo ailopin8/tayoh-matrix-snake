@@ -14,3 +14,9 @@ test('preview quantifies only its encoded intervention',()=>{const p=previewInpu
 test('incomplete coordinates and invalid intensity rejected',()=>{assert.throws(()=>previewInput({label:'x',kind:'stress',value:2,position:[0,null,1]}));assert.throws(()=>previewInput({label:'x',kind:'stress',value:11}));});
 test('explicit coordinates copied, not aliased',()=>{const position=[1,2,3],p=previewInput({label:'x',kind:'information',value:2,position});position[0]=9;assert.equal(p.input.position[0],1);});
 test('relational view distinguishes conditions from flows',()=>{const flows=flowSummary(healthy());assert.equal(flows.length,6);assert.equal(flows[0].kind,'condition');assert.match(flows[3].value,/14 GU/);});
+
+test('purpose-gap evidence directs attention without overriding urgent viability',()=>{
+ const s={tick:10,alive:true,agents:[{alive:true,battery:80,capacity:100}],purpose:{roles:[{gap:true}],attention:{focus:'child_A',lens:'material',reason:'No intake and falling battery'}}};
+ assert.equal(deriveNeed(s).mode,'investigate');assert.equal(deriveNeed(s).focus,'children');
+ s.agents[0].battery=10;assert.equal(deriveNeed(s).urgent,true);
+});

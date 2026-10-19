@@ -1,4 +1,5 @@
 """Integer, fixed-tick, authoritative TAYOH simulation. Python 3.10+."""
+from purpose import PurposeObserver
 import copy
 import hashlib
 import json
@@ -50,6 +51,7 @@ class World:
             with self.as_agent(k):self.observe()
         self.sense_others()
         self.systems=Systems(self) if systems else None
+        self.purpose_observer=PurposeObserver(self)
     @contextmanager
     def as_agent(self, number):
         previous=self._active;self._active=number
@@ -274,6 +276,7 @@ class World:
         self.ecology()
         for k in range(len(self.agents)):
             with self.as_agent(k):self.observe()
+        self.purpose_observer.record(self)
         return self.state()
     def diffuse(self):
         delta=[0]*1000
@@ -325,6 +328,7 @@ class World:
            'input_energy':self.input_energy,'spawned_material':self.spawned_material,'compost':self.compost,
            'systems':self.systems.snapshot() if self.systems else None,
            'output':self.systems.output(self) if self.systems else None,
+           'purpose':self.purpose_observer.report(self),
            'system_energy':self.systems.bank+self.systems.heat if self.systems else 0,
            'initial_energy':20000+60*len(self.agents)+(200 if self.systems else 0),'initial_material':80+3*len(self.agents),
            'right_of_way':self.agents[(self.tick+1)%len(self.agents)].label}
