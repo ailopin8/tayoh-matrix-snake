@@ -47,3 +47,13 @@ Automated: pure policy priorities, immediate urgency, five-tick recovery hold, p
 Desktop: load browser Python, change task/lens without advancing tick, review without queueing, cancel, apply and verify queued count, Step and see provenance/comparison, inspect cells, check color-independent labels and capture the spatial console.
 
 Headset still required: both controllers' target accuracy, ray collisions at panel edges, review/confirm distinction, exit behavior, readable angular text size, panel comfort at seated/standing heights, frame rate with energy overlay, and safe interaction under evolving critical states. Until these pass, controller support is implemented but unverified on hardware.
+
+## v0.13 simple workspace
+
+Default desktop layout: Run / Step / Enter VR; matrix with Home, turn and size buttons; a relationship path and four component selectors; three input presets (support, stress, information at intensity 2). Presets use the existing reviewed-input pipeline: preview, explicit confirmation, next authoritative tick. Session options contain reset, autonomy and replay export. Advanced tools retain declarations, raw models, slice explorer, custom inputs, resource catalog and compression lab. Existing IDs and state contracts are preserved.
+
+Component explanations use actual systems.models estimates and Python purpose evidence. They describe smoothed role-viability beliefs, including self and the boundary, rather than claiming a complete representation of the world. The relationship path is a schematic of designed exchanges, not live causal proof. The interface does not turn declarations into physics.
+
+VR uses a short running/paused banner, one component explanation card, simulation buttons and a Next part ray button. Detailed role cards and schematic arrows are hidden; controller help starts hidden and Y reveals it. Controller actions, matrix transforms and input review semantics are retained. Desktop 3D hides the spatial text console, leaving an uncluttered matrix; its HTML controls remain available.
+
+Verification: 24 JavaScript tests pass. Browser checks cover selecting a component, reviewing support, confirming it and stepping. Existing Python engine is unchanged. Physical headset readability and reachability require Quest testing.
