@@ -28,7 +28,7 @@ export class SpatialInterface{
  }
  text(panel,lines,accent='#7cebc2',active=false){
   const ctx=panel.canvas.getContext('2d');ctx.fillStyle=active?'#173c48':'#10212b';ctx.fillRect(0,0,1024,360);ctx.strokeStyle=accent;ctx.lineWidth=12;ctx.strokeRect(6,6,1012,348);
-  lines.slice(0,4).forEach((line,i)=>{ctx.fillStyle=i===0?accent:'#e6f4f3';ctx.font=`${i===0?'bold ':''}${lines.length<=2?65:49}px sans-serif`;ctx.fillText(String(line).slice(0,58),28,78+i*77,970);});panel.texture.needsUpdate=true;
+  lines.slice(0,4).forEach((line,i)=>{ctx.fillStyle=i===0?accent:'#e6f4f3';ctx.font=`${i===0?'bold ':''}${lines.length===1?125:lines.length<=2?65:49}px sans-serif`;ctx.fillText(String(line).slice(0,58),28,lines.length===1?225:78+i*77,970);});panel.texture.needsUpdate=true;
  }
  update(s,p,context,running,draft){
   const signature=JSON.stringify([s.tick,p.mode,p.lens,p.focus,context.purpose,context.inspection,running,draft?.effect,draft?.spatialSupport]);if(signature===this.signature)return;this.signature=signature;
