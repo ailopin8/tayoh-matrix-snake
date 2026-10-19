@@ -5,6 +5,7 @@ import threading
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from engine import World
+from instructions import interpret
 ROOT=Path(__file__).parent/'web'
 world=World(); lock=threading.Lock()
 class Handler(SimpleHTTPRequestHandler):
@@ -31,6 +32,7 @@ class Handler(SimpleHTTPRequestHandler):
             if not 0 < length <= 4096: raise ValueError('Invalid request size')
             body=json.loads(self.rfile.read(length))
             with lock:
+                if self.path=='/api/interpret':return self.respond(interpret(body.get('text')))
                 if self.path=='/api/reset':
                     seed=body.get('seed',42)
                     if type(seed) is not int: raise ValueError('Seed must be an integer')

@@ -2,7 +2,7 @@
 const ready=(async()=>{
   importScripts('./vendor/pyodide/pyodide.js');
   const py=await loadPyodide({indexURL:new URL('./vendor/pyodide/',self.location.href).href});
-  for(const file of ['engine.py','systems.py','resources.py','purpose.py']){
+  for(const file of ['engine.py','systems.py','resources.py','purpose.py','instructions.py']){
     const r=await fetch(new URL('./py/'+file,self.location.href).href+'?v='+(new URL(self.location.href).searchParams.get('v')||'local'));if(!r.ok)throw Error('Missing simulation source: '+file);
     py.FS.writeFile('/home/pyodide/'+file,await r.text());
   }
@@ -10,11 +10,13 @@ const ready=(async()=>{
 import sys, json
 sys.path.insert(0, '/home/pyodide')
 from engine import World
+from instructions import interpret
 world = World(42)
 def dispatch(message):
     global world
     path = message['path']
     body = message.get('body') or {}
+    if path == '/api/interpret': return interpret(body.get('text'))
     if path == '/api/state': return world.state()
     if path == '/api/output': return world.systems.output(world)
     if path == '/api/replay':

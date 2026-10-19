@@ -1,5 +1,6 @@
 """Bounded behavioral evidence; describes outcomes, never infers hidden intention."""
 from collections import deque
+from instructions import describe
 
 class PurposeObserver:
     window = 32  # at most 31 logical tick transitions
@@ -50,6 +51,11 @@ class PurposeObserver:
                  not child['alive'] or (battery <= -15 and food == 0), 'material')
         gaps = [r for r in roles if r['gap']]
         focus = gaps[0] if gaps else None
+        policies=world.systems.policies if world.systems else {}
+        for r in roles:
+            policy=policies.get('children' if r['role'].startswith('child_') else r['role'],'default')
+            r['policy']=policy
+            if policy!='default':r['rules'] += '; '+describe('children' if r['role'].startswith('child_') else r['role'],policy)
         return {'schema': 'tayoh.purpose-evidence.v1', 'from_tick': first['tick'],
             'to_tick': last['tick'], 'transitions': ticks, 'capacity': self.window,
             'interpretation': 'Observed outcomes under current rules and inputs; not proof of intention or isolated causation',

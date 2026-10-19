@@ -2,6 +2,7 @@
 
 Game units and designed rules, not a calibrated model of an arbitrary real system.
 """
+from instructions import interpret, describe
 import copy
 import hashlib
 import random
@@ -12,6 +13,7 @@ class Systems:
         self.protector={'faces':[100]*6,'reserve':120,'heat':0,'consumed':0,'repaired':0}
         self.healer={'vitality':100,'reserve':80,'heat':0,'produced':80,'safe':True,'pollination':0}
         self.food={i:{'born':0,'expires':25+i%55,'kind':'regular'} for i,m in enumerate(world.material) if m}
+        self.policies={'protector':'default','healer':'default','children':'default'}
         self.failed=False;self.pressure=0;self.novelty=0;self.pending=[];self.processed=[];self.models={};self.models_tick=0
         self.last_damage={'face':None,'amount':0,'cause':'unattributed external influence','uncertain':True}
         self.update_models(world)
@@ -25,6 +27,10 @@ class Systems:
     def viable(self):return self.integrity>0 and self.healer['vitality']>0
     def validate_input(self, event):
         if not isinstance(event,dict):raise ValueError('Input must be an object')
+        if event.get('kind')=='instruction':
+            if set(event)-{'label','kind','text'}:raise ValueError('Unknown instruction field')
+            rule=interpret(event.get('text'))
+            return {'label':rule['text'],'kind':'instruction','text':rule['text']}
         if set(event)-{'label','kind','value','position'}:raise ValueError('Unknown input field')
         label=event.get('label','Experiment')
         if not isinstance(label,str) or not 1<=len(label)<=120:raise ValueError('Label must be 1–120 characters')
@@ -45,6 +51,12 @@ class Systems:
         used=min(amount,role['reserve']);role['reserve']-=used;role['heat']+=used;return used
     def start(self,w):
         for e in self.pending:
+            if e['kind']=='instruction':
+                rule=interpret(e['text'])
+                if rule['role']=='all':self.policies={k:'default' for k in self.policies}
+                else:self.policies[rule['role']]=rule['mode']
+                self.processed.append({**copy.deepcopy(e),'applied_tick':w.tick,'policy':copy.deepcopy(rule)})
+                continue
             x,y,z=e['position'];i=x+10*y+100*z;w.signal[i]=min(30,w.signal[i]+e['value']*3)
             if e['kind']=='stress':self.pressure=min(10,self.pressure+e['value'])
             elif e['kind']=='support':
@@ -91,11 +103,13 @@ class Systems:
         weakest=min(range(6),key=lambda j:p['faces'][j])
         child_beliefs=[v['estimate'] for k,v in self.models.get('protector',{}).items() if k.startswith('child_')]
         budget=4 if child_beliefs and min(child_beliefs)<30 else 3
+        budget={'repair':5,'conserve':1}.get(self.policies['protector'],budget)
         repair=0 if self.failed else min(budget,100-p['faces'][weakest],p['reserve'])
         self.spend(p,repair);p['faces'][weakest]+=repair;p['repaired']+=repair
         child_safe=all(a.alive and a.battery>=8 for a in w.agents)
         model=self.models.get('healer',{}).get('protector',{}).get('estimate',self.integrity)
-        h['safe']=not self.failed and self.integrity>=40 and model>=40 and child_safe
+        threshold=65 if self.policies['healer']=='cautious' else 40
+        h['safe']=not self.failed and self.integrity>=threshold and model>=threshold and child_safe
         if h['safe']:
             h['vitality']=min(100,h['vitality']+1)
             h['reserve']+=3;w.input_energy+=3  # external metabolic substrate, explicitly supplied
@@ -103,7 +117,7 @@ class Systems:
         self.spend(h,1)
         w.resources={i:r for i,r in w.resources.items() if r['expires']>w.tick}
         free=[i for i in range(1000) if not w.material[i] and i not in w.all_body() and i not in w.resources]
-        if h['safe'] and h['vitality']>=20 and h['reserve']>=1 and sum(w.material)<80 and free:
+        if (self.policies['healer']!='cautious' or w.tick%3==0) and h['safe'] and h['vitality']>=20 and h['reserve']>=1 and sum(w.material)<80 and free:
             i=free[w.rng.randrange(len(free))];kind='regular'
             # New information changes available phenotypes, gated by boundary condition.
             if self.novelty>0:
@@ -126,7 +140,7 @@ class Systems:
     def snapshot(self):
         return {'failed':self.failed,'roles':{'protector':'Environment boundary','healer':'Food-producing process and its timed food','children':'Snakes A/B'},
                 'protector':copy.deepcopy(self.protector),'integrity':self.integrity,'healer':copy.deepcopy(self.healer),
-                'pressure':self.pressure,'novelty':self.novelty,'last_damage':self.last_damage.copy(),
+                'policies':self.policies.copy(),'policy_descriptions':{k:describe(k,v) for k,v in self.policies.items()},'pressure':self.pressure,'novelty':self.novelty,'last_damage':self.last_damage.copy(),
                 'models':copy.deepcopy(self.models),'food':copy.deepcopy(self.food),
                 'pending':copy.deepcopy(self.pending),'processed':copy.deepcopy(self.processed)}
     def output(self,w):

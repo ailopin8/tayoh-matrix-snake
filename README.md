@@ -72,3 +72,5 @@ Quest controller update: [complete controls and headset verification checklist](
 Version 0.12 adds authoritative Python [purpose evidence algorithms](docs/PURPOSE_ALGORITHMS.md): declared purpose, operating rules, rolling observed outcomes and explicit attention thresholds, shown on desktop and in VR. These describe behavior; they do not establish intention or causation.
 
 Version 0.13 simplifies the default workspace: explore the matrix, select one component, inspect its beliefs on demand, or review one of three input presets. Full tools remain under More tools & detailed evidence. VR shows one component card with a Next part button; Y reveals controller help.
+
+Version 0.14 adds [plain-language rule instructions](docs/NATURAL_LANGUAGE_RULES.md). Choose what the boundary, producer or snakes should do, review the exact policy and trade-off, then confirm. Seven supported instructions change Python decision policies on the next tick; unsupported language is explained and rejected.

@@ -6,7 +6,7 @@ export class SpatialInterface{
   this.actions=actions;this.root=new THREE.Group();this.root.position.copy(parent.position);scene.add(this.root);this.hitTargets=[];this.ray=new THREE.Raycaster();this.rotation=new THREE.Matrix4();this.labels=[];this.signature='';
   this.banner=this.panel(1.65,.25,[0,.88,0]);
   this.roles=[this.panel(.72,.3,[-.93,.36,0]),this.panel(.72,.3,[-.93,-.1,0]),this.panel(.72,.3,[.93,-.1,0])];
-  this.purpose=this.panel(.9,.44,[1.05,0,0]);const insight=this.panel(.5,.15,[0,-1.25,0]);insight.mesh.userData.action=6;this.hitTargets.push(insight.mesh);this.text(insight,['Next part']);
+  this.purpose=this.panel(.9,.44,[1.05,0,0]);const insight=this.panel(.5,.15,[0,-1.25,0]);insight.mesh.userData.action=6;this.hitTargets.push(insight.mesh);this.text(insight,['Next part']);const rule=this.panel(.5,.15,[.57,-1.25,0]);rule.mesh.userData.action=7;this.hitTargets.push(rule.mesh);this.text(rule,['Try rule']);
   this.roleNames=['Protector','Healer','Children'];
   this.lines=[];
   for(const [a,b] of [[[-.58,.32,0],[-.58,-.05,0]],[[-.55,-.18,0],[.55,-.18,0]],[[.55,.05,0],[-.55,.42,0]]]){
@@ -39,17 +39,17 @@ export class SpatialInterface{
  update(s,p,context,running,draft){
   const signature=JSON.stringify([s.tick,p.mode,p.lens,p.focus,context.purpose,context.inspection,this.actions.role?.(),running,draft?.effect,draft?.spatialSupport]);if(signature===this.signature)return;this.signature=signature;
   this.text(this.banner,[`${running?'RUNNING':'PAUSED'} / ${p.lens}`,draft?draft.effect:p.alert||'A: Run / pause · Next part: explore relationships'],p.urgent?'#ffad83':'#7cebc2');
-  const r=explainRole(s,this.actions.role?.()||'protector');this.text(this.purpose,[r.name+' / acts and estimates',r.relationship,r.observed,`Estimates: self ${r.self??'?'}/100 · boundary ${r.environment??'?'}/100`]);this.roles.forEach(p=>p.mesh.visible=false);
+  const r=explainRole(s,this.actions.role?.()||'protector');this.text(this.purpose,[r.name+' / acts and estimates',r.relationship,r.observed,`Estimates: self ${r.self??'?'}/100 · boundary ${r.environment??'?'}/100`]);if(draft)this.text(this.purpose,['Review input',...(draft.effect.match(/.{1,48}(?:\s|$)/g)||[draft.effect])],'#ffd08a');this.roles.forEach(p=>p.mesh.visible=false);
   const x=s.systems;
   const values=[[`Protector ${x?.integrity??'?'} / 100`,`Repair reserve ${x?.protector.reserve??'?'}`,`External pressure ${x?.pressure??'?'} / 10`],[`Healer ${x?.healer.vitality??'?'} / 100`,x?.healer.safe?'Safe production':'Production paused',`Expired food → protector ${x?.protector.consumed??0}`],[`Children A / B`,...s.agents.map(a=>`${a.id}: food ${a.score} · battery ${a.battery}/${a.capacity}`)]];
   values.forEach((v,i)=>this.text(this.roles[i],v,p.focus===this.roleNames[i].toLowerCase()||p.focus==='relationships'?'#7cebc2':'#829fa8',p.focus===this.roleNames[i].toLowerCase()));
   this.lines.forEach(line=>line.visible=false);
-  const names=[running?'Pause':'Run','Step','Next lens',draft?.spatialSupport?'Confirm +2':'Support +2','Cancel draft',this.actions.renderer.xr.isPresenting?'Exit VR':'Headset only'];
+  const names=[running?'Pause':'Run','Step','Next lens',draft?.input?.kind==='instruction'?'Apply rule':draft?.spatialSupport?'Confirm +2':'Support +2','Cancel draft',this.actions.renderer.xr.isPresenting?'Exit VR':'Headset only'];
   names.forEach((name,i)=>this.text(this.buttons[i],[name],i===3&&draft?'#ffd08a':'#c8e9e2'));
  }
  select(c){
   this.root.updateWorldMatrix(true,true);c.updateWorldMatrix(true,false);this.rotation.extractRotation(c.matrixWorld);this.ray.ray.origin.setFromMatrixPosition(c.matrixWorld);this.ray.ray.direction.set(0,0,-1).applyMatrix4(this.rotation);
   const hit=this.ray.intersectObjects(this.hitTargets,false)[0];if(hit)this.activate(hit.object.userData.action);else this.actions.inspect?.(this.ray);
  }
- activate(i){const a=this.actions;[a.toggle,a.step,a.lens,a.support,a.cancel,a.exit,a.insight][i]?.();}
+ activate(i){const a=this.actions;[a.toggle,a.step,a.lens,a.support,a.cancel,a.exit,a.insight,a.rule][i]?.();}
 }

@@ -174,8 +174,10 @@ class World:
                 if model['alive']:
                     pos=(i%10,(i//10)%10,i//100)
                     other_distance=sum(abs(a-b) for a,b in zip(pos,model['head']))
-                    if other_distance<distance:value*=0.65
-                    if model['target']==i:value*=0.8
+                    policy=self.systems.policies['children'] if self.systems else 'default'
+                    near,shared={'cooperate':(.35,.5),'compete':(.9,1)}.get(policy,(.65,.8))
+                    if other_distance<distance:value*=near
+                    if model['target']==i:value*=shared
             candidates.append((value/(distance+1),-distance,-i,move,i,kind))
         # Reject first moves that immediately strand a growing body.
         def volume(move):

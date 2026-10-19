@@ -56,3 +56,7 @@ Added nine automated controller tests (21 JavaScript tests total) for handedness
 ## v0.12 purpose evidence update
 
 61 Python tests and 22 JavaScript tests pass. The published Python worker includes purpose.py. Desktop preview verified no-evidence initial state and post-step measured outcomes. The VR purpose panel uses the same authoritative report and includes declaration, rules and observed behavior. Physical headset readability remains untested.
+
+## v0.14 language-to-policy update
+
+68 Python and 24 JavaScript tests pass. Seven new Python tests verify all registered instructions, rejection without mutation, deferred activation/restoration, actual repair/production/target changes, replay and ledger conservation. Browser worker checks verified instruction preview, confirmation, next-tick activation, natural-language active-rule display and producer preview. Physical Quest rule buttons, text readability and controller reach remain untested.
