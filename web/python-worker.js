@@ -3,7 +3,7 @@ const ready=(async()=>{
   importScripts('./vendor/pyodide/pyodide.js');
   const py=await loadPyodide({indexURL:new URL('./vendor/pyodide/',self.location.href).href});
   for(const file of ['engine.py','systems.py','resources.py']){
-    const r=await fetch(new URL('./py/'+file,self.location.href));if(!r.ok)throw Error('Missing simulation source: '+file);
+    const r=await fetch(new URL('./py/'+file,self.location.href).href+'?v='+(new URL(self.location.href).searchParams.get('v')||'local'));if(!r.ok)throw Error('Missing simulation source: '+file);
     py.FS.writeFile('/home/pyodide/'+file,await r.text());
   }
   py.runPython(`

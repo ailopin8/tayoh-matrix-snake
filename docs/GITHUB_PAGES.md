@@ -17,7 +17,7 @@ python3 scripts/build_pages.py
 python3 -m http.server 8766 --directory dist
 ```
 
-The static folder contains the interface, Python source and pinned runtime. Its configuration selects `browser-python`; the source `web/runtime-config.json` keeps laptop-server mode. Paths are relative to support GitHub Pages project subdirectories.
+The static folder contains the interface, Python source and pinned runtime. Its configuration selects `browser-python`; the source `web/runtime-config.json` keeps laptop-server mode. Paths are relative to support GitHub Pages project subdirectories. A content fingerprint is added to interface modules, styles, worker/config and Python source requests so a refreshed deployment does not mix cached interface revisions.
 
 The included `.github/workflows/pages.yml` tests the Python implementation, builds `dist`, uploads a Pages artifact and deploys on pushes to `main`. Set repository Settings → Pages → Source to **GitHub Actions**. The repository must exist under the intended owner; publication is not complete until GitHub confirms deployment and the site loads successfully.
 
