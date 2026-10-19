@@ -66,3 +66,5 @@ One click requests a browser immersive session when supported; browser consent m
 - `replay.py`: action log replay and checksum.
 
 The boundary demonstration is inspired by the supplied red/blue folding images. It explicitly uses a many-to-one max-norm map; it is not a proof that an arbitrary fold and a single cut make a closed boundary. Its controls are independent of the snake world.
+
+Quest controller update: [complete controls and headset verification checklist](docs/QUEST_CONTROLS.md). A runs/pauses, B steps, X changes lens, Y toggles help. Grips pull/rotate/resize; joysticks move and rotate the matrix. Enter VR begins paused. Run all interface/controller checks with `node --test tests/*.test.mjs`.

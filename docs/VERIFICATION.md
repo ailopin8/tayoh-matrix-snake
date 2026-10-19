@@ -48,3 +48,7 @@ For two children: shared energy + child batteries/heat + protector/healer reserv
 Role identity, thresholds, uncertain damage envelope, viability summaries and input normalization are explicit designed assumptions. They have not been calibrated to an external scientific or organizational system. The typed adapter cannot automatically infer an arbitrary real system's causal structure. Uncertainty is seeded and bounded; its external cause remains unidentified.
 
 Physical WebXR headset entry, stereo, tracking, controller mapping, comfort/performance and standalone trusted-HTTPS use remain untested. Desktop and VR use the same cube snapshot; role-panel forms and meters are desktop UI, not an immersive headset HUD. The cube outline and food colors carry the role-state cues into the spatial view. Use one client Run clock during reproducible experiments.
+
+## v0.11 controller update
+
+Added nine automated controller tests (21 JavaScript tests total) for handedness, edge presses, held/reconnected buttons, deadzone, capped frame time, stick modes, home, grip transforms, scaling bounds, tracking loss, source replacement and XR sampling. Existing 56 Python tests retain simulation coverage. See QUEST_CONTROLS.md for mappings and the physical-headset checklist. Physical Quest controls and immersion remain untested in this development environment; no claim of headset validation is made.
