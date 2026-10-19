@@ -1,3 +1,15 @@
+# Adaptive interface verification — v0.10
+
+19 October 2026. Twelve new JavaScript policy tests pass: purpose-driven attention without snapshot mutation; priority of boundary/healer/child needs; uncertain-pressure messaging; pinned lens with critical alerts; five-tick recovery hold; failure review; quantitative draft effects; invalid coordinates/intensity; copied coordinate data; and typed relational summaries. The deployment workflow also runs the existing 56 Python tests.
+
+Real Chromium static/Pyodide checks passed: switching to Test an input changed the active lens to Information without advancing tick zero or changing its hash; reviewing an input left the queue unchanged; Cancel removed the draft; explicit Queue then Step applied the input and reported the observed tick-0→1 difference. Selecting Energy pinned the lens without advancing tick one. Selecting a slice cell displayed its addressed E/M/I and observation tick. The expanded spatial preview provides an explicit way to inspect the new panels on desktop.
+
+The spatial prototype is visually checked on desktop, with body/resource rendering and the energy-field overlay. Physical Quest controller targeting, actual stereo, panel angular legibility, seated/standing comfort, exit and energy-overlay frame rate remain untested. Pure policy and desktop tests do not verify these hardware properties. The role panels are world-anchored, not a head-locked HUD. Full text editing remains desktop/browser-form input.
+
+The researched principles and code-repository patterns are attributed in INTERFACE_PHILOSOPHY.md, with exact repository snapshot SHAs in design-source-snapshots.json. These are pattern adaptations, not copied library implementation code or proof of a universal systems theory.
+
+---
+
 # GitHub Pages / browser Python verification — v0.9
 
 19 October 2026. All 56 native Python regression tests pass. The static build loads the self-hosted Pyodide 0.27.7 runtime in a real Chromium browser, creates both snakes and all role meters, and advances through the same Python transition without a backend server. Native and browser initial hashes match (`c4e0f2ecbf4f`), as do the hashes after one autonomous tick (`9a2d0dffdc04`). These finite comparisons do not establish cross-version equivalence for all possible trajectories.

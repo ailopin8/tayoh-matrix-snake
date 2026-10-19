@@ -1,0 +1,22 @@
+[
+  {
+    "repo": "pmndrs/uikit",
+    "sha": "099f6f701c5fbec356f9f2d5d7dc86c8a6ff2cbf",
+    "url": "https://github.com/pmndrs/uikit/commit/099f6f701c5fbec356f9f2d5d7dc86c8a6ff2cbf"
+  },
+  {
+    "repo": "pmndrs/xr",
+    "sha": "0e1acd868ca744032240db819d1e428bd1812901",
+    "url": "https://github.com/pmndrs/xr/commit/0e1acd868ca744032240db819d1e428bd1812901"
+  },
+  {
+    "repo": "facebook/immersive-web-sdk",
+    "sha": "0778f518db51e9d1836977f3b6fed9b53f3f0c6f",
+    "url": "https://github.com/facebook/immersive-web-sdk/commit/0778f518db51e9d1836977f3b6fed9b53f3f0c6f"
+  },
+  {
+    "repo": "statelyai/xstate",
+    "sha": "6a85c4057dc7c0906381664249e0b1bac300cd92",
+    "url": "https://github.com/statelyai/xstate/commit/6a85c4057dc7c0906381664249e0b1bac300cd92"
+  }
+]

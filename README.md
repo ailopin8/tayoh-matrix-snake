@@ -1,8 +1,19 @@
-# TAYOH Matrix Snake 0.9
+# TAYOH Matrix Snake 0.10
 
 Two snakes (green A and blue B) compete for one shared pool of food and special resources. Each senses the other and uses a bounded model to avoid its body, anticipate its next step and discount contested food. Shared-cell claims use alternating right-of-way; this prevents double consumption, not unequal outcomes.
 
 A deterministic Python systems-game prototype with a 10×10×10 world, interactive desktop slices, full-cube preview, shared-state WebXR presentation, and a boundary/compression laboratory.
+
+## Interface philosophy and adaptive space
+
+Declare purpose and boundary, inspect typed relationships, review an input, apply it, then compare the observed outcome. The interface prioritizes boundary/food/child needs with an explained, reversible lens change. Pin a lens to keep it stable. Purpose text changes attention and interpretation, not the simulation equations.
+
+The spatial console has world-anchored role panels, five lenses, visible-cell inspection and a fixed action row. Both controller rays are implemented. Trigger now selects the pointed-at control/cell; it no longer cycles snake directions. Support +2 uses review then confirmation. Full text/coordinate entry remains in the desktop/browser form. Headset readability, controller accuracy and comfort remain unverified.
+
+- `docs/INTERFACE_PHILOSOPHY.md`: principles, researched sources, four GitHub pattern studies, implemented scope and limits.
+- `docs/INTERFACE_SPEC.md`: components, state policy, spatial dimensions and acceptance criteria.
+- `web/interface-policy.mjs`: pure, tested attention policy.
+- `web/spatial-interface.js`: controller/pointer adapter and world-anchored panels.
 
 ## Protector / Healer / Child
 
@@ -29,6 +40,7 @@ Open http://127.0.0.1:8765 . Autonomous A is enabled by default; B always forage
 
 ```sh
 python3 -m unittest discover -s tests -v
+node --test tests/interface.test.mjs
 python3 replay.py replay.json
 ```
 
@@ -40,7 +52,7 @@ For PC-attached headsets, open the localhost URL in a compatible WebXR browser a
 
 The service binds loopback by default. It is a local development tool with no accounts or authentication; do not expose it as a public production service. Configure any remote proxy for your own restricted access. `--host` and `--port` are optional local hosting settings.
 
-One click requests a browser immersive session when supported; browser consent may still be required. It shows the same authoritative cube, not a second simulation. Controller trigger/select cycles world directions in manual mode; autonomous mode chooses its own direction. Enable Run before entry; choose a fresh reset if the snake has died. There is no headset HUD. Physical headset entry, stereo, tracking, controller mapping, HTTPS remote use, and performance have not been verified on hardware; see docs/VERIFICATION.md.
+One click requests a browser immersive session when supported; browser consent may still be required. It shows the same authoritative cube, not a second simulation. Controller trigger selects the console button or visible cell under its ray; manual snake direction remains available through desktop controls. Enable Run before entry; choose a fresh reset if the snake has died. Role/status panels and basic controls are world-anchored; full text-entry forms remain desktop UI. Physical headset entry, stereo, tracking, controller mapping, HTTPS remote use, and performance have not been verified on hardware; see docs/VERIFICATION.md.
 
 ## Files
 
